@@ -5,7 +5,9 @@
 #include <QObject>
 #include <vector>
 #include "Train.h"
+#include <QMutex>
 #include <QDebug>
+#include <QLabel>
 
 #define NUM_OF_PLATFORMS 5
 
@@ -22,9 +24,11 @@ private:
 private:
     bool gate_in_open;
     bool gate_out_open;
+    bool exit_line_free;
     std::vector<Train*> in_queue;
     std::vector<Train*> out_queue;
     Train* platforms[NUM_OF_PLATFORMS];
+    QMutex m1, m2;
 
 signals:
     void TrainComing(Train*);

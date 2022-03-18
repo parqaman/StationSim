@@ -13,6 +13,7 @@ void OutMovement::run()
     int cooldown = 0;
     while (true) {
         sleep(1);
+        m.lock();
         if(moving_train != nullptr && cooldown < occupy_exit_line_duration){
             cooldown++;
         }
@@ -24,10 +25,13 @@ void OutMovement::run()
         if(moving_train != nullptr && cooldown == exit_platform_duration){
             emit PlatformFree(moving_train);
         }
+        m.unlock();
     }
 }
 
 void OutMovement::onLeavingTrain(Train* train)
 {
+    m.lock();
     moving_train = train;
+    m.unlock();
 }

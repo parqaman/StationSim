@@ -9,12 +9,10 @@ InMovement::InMovement(QObject *parent)
 
 void InMovement::run()
 {
-    int timer = 0;
     int cooldown = 0;
     while (true) {
-//        qDebug() << timer << " - InMovement";
-        timer++;
         sleep(1);
+        m.lock();
         if(moving_train != nullptr && cooldown < in_movement_duration){
             cooldown++;
         }
@@ -23,10 +21,13 @@ void InMovement::run()
             moving_train = nullptr;
             cooldown = 0;
         }
+        m.unlock();
     }
 }
 
 void InMovement::onTrainComing(Train* train)
 {
+    m.lock();
     moving_train = train;
+    m.unlock();
 }
