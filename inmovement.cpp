@@ -30,22 +30,33 @@ void InMovement::run()
 void InMovement::move_label(int platform, int cooldown)
 {
     if(platform == 0){
-        moving_label->setGeometry(moving_label->x() - 102, moving_label->y(), moving_label->width(), moving_label->height());
+        moving_label->move(moving_label->x() - 105, moving_label->y());
     }
-    /*
+
     else if(platform == 1){
-        if(cooldown != 1)
-            moving_label->setGeometry(moving_label->x() - 92.4, moving_label->y(), moving_label->width(), moving_label->height());
+        if(cooldown != 2)
+            moving_label->setGeometry(moving_label->x() - 105, moving_label->y(), moving_label->width(), moving_label->height());
         else
-            moving_label->setGeometry(moving_label->x() - 185, moving_label->y() - 61, moving_label->width(), moving_label->height());
+            moving_label->setGeometry(moving_label->x() - 105, moving_label->y() - 60, moving_label->width(), moving_label->height());
     }
     else if(platform == 2){
-        if(cooldown < 1 || cooldown > 2)
-            moving_label->setGeometry(moving_label->x() - 81.1, moving_label->y(), moving_label->width(), moving_label->height());
+        if(cooldown < 2 || cooldown > 3)
+            moving_label->setGeometry(moving_label->x() - 105, moving_label->y(), moving_label->width(), moving_label->height());
         else
-            moving_label->setGeometry(moving_label->x() - 185, moving_label->y() - 61, moving_label->width(), moving_label->height());
+            moving_label->setGeometry(moving_label->x() - 105, moving_label->y() - 60, moving_label->width(), moving_label->height());
     }
-    */
+    else if(platform == 3){
+        if(cooldown < 2 || cooldown > 4)
+            moving_label->setGeometry(moving_label->x() - 105, moving_label->y(), moving_label->width(), moving_label->height());
+        else
+            moving_label->setGeometry(moving_label->x() - 105, moving_label->y() - 60, moving_label->width(), moving_label->height());
+    }
+    else if(platform == 4){
+        if(cooldown < 2 || cooldown > 5)
+            moving_label->setGeometry(moving_label->x() - 105, moving_label->y(), moving_label->width(), moving_label->height());
+        else
+            moving_label->setGeometry(moving_label->x() - 105, moving_label->y() - 60, moving_label->width(), moving_label->height());
+    }
 }
 
 void InMovement::onTrainComing(Train* train, QLabel* _label)

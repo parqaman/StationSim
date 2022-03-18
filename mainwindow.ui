@@ -48,9 +48,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>2171</x>
-      <y>488</y>
-      <width>80</width>
+      <x>2218</x>
+      <y>489</y>
+      <width>81</width>
       <height>30</height>
      </rect>
     </property>
@@ -85,7 +85,42 @@ border:  2px solid black;</string>
      <rect>
       <x>1900</x>
       <y>427</y>
-      <width>80</width>
+      <width>81</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+border:  2px solid black;</string>
+    </property>
+    <property name="text">
+     <string>Train 500</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="indent">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="example_label_3">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1684</x>
+      <y>429</y>
+      <width>81</width>
       <height>30</height>
      </rect>
     </property>

@@ -49,7 +49,7 @@ void MainWindow::createLabels(int num_of_labels)
 {
     for(int i = 0; i < num_of_labels; i++){
         train_labels[i] = new QLabel(this);
-        train_labels[i]->setGeometry(2180, 488, 80, 30);
+        train_labels[i]->setGeometry(2209, 489, 81, 30);
         train_labels[i]->setStyleSheet("font: 10pt; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); border: 2px solid black");
         train_labels[i]->setText(QString::fromStdString("Train " + std::to_string(499 + 1)));
         train_labels[i]->hide();
