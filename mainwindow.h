@@ -20,6 +20,10 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QLabel* getPlatformLabel(int pos) const;
+
+private:
+    void createLabels(int num_of_labels);
 
 private:
     Ui::MainWindow *ui;
@@ -27,5 +31,6 @@ private:
     TrainGenerator* train_thread;
     InMovement* in_movement_thread;
     OutMovement* out_movement_thread;
+    QLabel** train_labels;
 };
 #endif // MAINWINDOW_H

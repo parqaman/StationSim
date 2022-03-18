@@ -9,10 +9,10 @@ TrainGenerator::TrainGenerator(QObject* parent)
 void TrainGenerator::run()
 {
     int sleep_duration = 70;
-    int train_cycle = 20;
+    int train_cycle = 5;
     while (true) {
-        sleep(train_cycle);
         Train* newtrain = new Train(sleep_duration);
         emit TrainGenerated(newtrain);
+        sleep(train_cycle);
     }
 }

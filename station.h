@@ -15,7 +15,7 @@ class Station : public QThread
 {
     Q_OBJECT
 public:
-    explicit Station(QObject *parent = nullptr);
+    explicit Station(QLabel** _train_labels, QObject *parent = nullptr);
     void run();
 
 private:
@@ -29,9 +29,10 @@ private:
     std::vector<Train*> out_queue;
     Train* platforms[NUM_OF_PLATFORMS];
     QMutex m1, m2;
+    QLabel** train_labels;
 
 signals:
-    void TrainComing(Train*);
+    void TrainComing(Train*, QLabel*);
     void TrainLeaving(Train*);
 
 public slots:

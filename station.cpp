@@ -1,19 +1,15 @@
 #include "station.h"
 
-Station::Station(QObject *parent)
+Station::Station(QLabel** _train_labels, QObject *parent)
     : QThread{parent}
     , gate_in_open{true}
     , gate_out_open{true}
     , exit_line_free{true}
+    , train_labels(_train_labels)
 {
     for(int i = 0; i < NUM_OF_PLATFORMS; i++){
         platforms[i] = nullptr;
     }
-    QLabel* q = new QLabel;
-    q->setGeometry(1410, 480, 261, 191);
-    q->setProperty("text", "text label");
-    q->setStyleSheet("font: 18pt");
-
 }
 
 void Station::run()
@@ -56,7 +52,9 @@ void Station::run()
             if(pos != -1){
                 gate_in_open = false;
                 in_queue.at(0)->setPlatform_index(pos);
-                emit TrainComing(in_queue.at(0));
+                train_labels[in_queue.at(0)->getPlatform_index()]->setText(QString::fromStdString("Train " + std::to_string(in_queue.at(0)->getId())));
+                train_labels[in_queue.at(0)->getPlatform_index()]->show();
+                emit TrainComing(in_queue.at(0), train_labels[in_queue.at(0)->getPlatform_index()]);
                 in_queue.erase(in_queue.begin());
             }
             else {
@@ -64,8 +62,6 @@ void Station::run()
             }
         }
         m1.unlock();
-//        timer++;
-//        qDebug() << timer;
     }
 }
 
