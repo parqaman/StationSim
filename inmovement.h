@@ -19,6 +19,7 @@ private:
     void move_label(int platform, int cooldown);
 
 private:
+    int cooldown;
     int in_movement_duration;
     Train* moving_train;
     QLabel* moving_label;
@@ -29,6 +30,7 @@ signals:
 
 public slots:
     void onTrainComing(Train*, QLabel*);
+    void onHalfSecondUpdate();
 };
 
 #endif // INMOVEMENT_H

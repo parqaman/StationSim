@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QMutex>
+#include <QLabel>
 #include "Train.h"
 
 class OutMovement : public QThread
@@ -15,9 +16,14 @@ public:
     void run();
 
 private:
+    void move_label(int platform, int cooldown);
+
+private:
+    int cooldown;
     int exit_platform_duration;
     int occupy_exit_line_duration;
     Train* moving_train;
+    QLabel* moving_label;
     QMutex m;
 
 signals:
@@ -25,7 +31,8 @@ signals:
     void PlatformFree(Train*);
 
 public slots:
-    void onLeavingTrain(Train* );
+    void onLeavingTrain(Train*, QLabel*);
+    void onHalfSecondUpdate();
 };
 
 #endif // OUTMOVEMENT_H

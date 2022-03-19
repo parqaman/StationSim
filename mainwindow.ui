@@ -147,6 +147,16 @@ border:  2px solid black;</string>
      <number>0</number>
     </property>
    </widget>
+   <widget class="QLCDNumber" name="clock_display">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>60</y>
+      <width>191</width>
+      <height>131</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

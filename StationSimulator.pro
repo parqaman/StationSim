@@ -15,6 +15,7 @@ SOURCES += \
     mainwindow.cpp \
     outmovement.cpp \
     station.cpp \
+    timeclock.cpp \
     traingenerator.cpp
 
 HEADERS += \
@@ -23,6 +24,7 @@ HEADERS += \
     mainwindow.h \
     outmovement.h \
     station.h \
+    timeclock.h \
     traingenerator.h
 
 FORMS += \
