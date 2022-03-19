@@ -14,6 +14,7 @@ public:
 
 private:
     int cycle_counter;
+    QMutex m;
 
 
 signals:

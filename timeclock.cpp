@@ -9,14 +9,14 @@ TimeClock::TimeClock(QObject *parent)
 void TimeClock::run()
 {
     int counter = 0;
+    const int turbo = 100;
     while (true) {
-        usleep(500000);
-//        qDebug() << counter;
-        emit HalfSecondUpdate();
-        usleep(500000);
-        emit HalfSecondUpdate();
-        emit OneSecondUpdate();
-        qDebug() << counter;
+        usleep(500000 / turbo);
+        emit HalfSecondUpdate(counter);
+        usleep(500000 / turbo);
+        qDebug() << counter << " - timer clock";
         counter++;
+        emit HalfSecondUpdate(counter);
+        emit OneSecondUpdate();
     }
 }

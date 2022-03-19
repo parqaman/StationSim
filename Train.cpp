@@ -4,6 +4,7 @@ Train::Train(int _duration)
     :
       id(++id_counter),
       stop_duration(_duration)
+    , listed(false)
 {
 }
 
@@ -30,4 +31,14 @@ int Train::getPlatform_index() const
 void Train::setPlatform_index(int newPlatform_index)
 {
     platform_index = newPlatform_index;
+}
+
+bool Train::getListed() const
+{
+    return listed;
+}
+
+void Train::setListed(bool newListed)
+{
+    listed = newListed;
 }

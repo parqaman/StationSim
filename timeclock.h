@@ -12,7 +12,7 @@ public:
     void run();
 
 signals:
-    void HalfSecondUpdate();
+    void HalfSecondUpdate(int);
     void OneSecondUpdate();
 };
 

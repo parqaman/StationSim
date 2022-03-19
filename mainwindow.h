@@ -38,5 +38,10 @@ private:
 
 public slots:
     void onSecondUpdate();
+    void attach_label(int, int);
+    void detach_label(int);
+    void move_label_in(int platform, int cooldown);
+    void move_label_out(int platform, int cooldown);
+
 };
 #endif // MAINWINDOW_H

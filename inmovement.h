@@ -6,7 +6,6 @@
 #include "Train.h"
 #include <QDebug>
 #include <QMutex>
-#include <QLabel>
 
 class InMovement : public QThread
 {
@@ -19,18 +18,19 @@ private:
     void move_label(int platform, int cooldown);
 
 private:
+    int second_counter;
     int cooldown;
     int in_movement_duration;
     Train* moving_train;
-    QLabel* moving_label;
     QMutex m;
 
 signals:
+    void MoveLabel(int platform, int timer);
     void ArrivedAtPlatform(Train*);
 
 public slots:
-    void onTrainComing(Train*, QLabel*);
-    void onHalfSecondUpdate();
+    void onTrainComing(Train*);
+    void onHalfSecondUpdate(int);
 };
 
 #endif // INMOVEMENT_H

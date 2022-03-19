@@ -7,7 +7,6 @@
 #include "Train.h"
 #include <QMutex>
 #include <QDebug>
-#include <QLabel>
 
 #define NUM_OF_PLATFORMS 5
 
@@ -15,7 +14,7 @@ class Station : public QThread
 {
     Q_OBJECT
 public:
-    explicit Station(QLabel** _train_labels, QObject *parent = nullptr);
+    explicit Station(QObject *parent = nullptr);
     void run();
 
 private:
@@ -24,17 +23,18 @@ private:
 private:
     unsigned int second_counter;
     bool gate_in_open;
-//    bool gate_out_open;
     bool exit_line_free;
+    std::vector<int> free_platforms_index_list;
     std::vector<Train*> in_queue;
     std::vector<Train*> out_queue;
     Train* platforms[NUM_OF_PLATFORMS];
     QMutex m1;
-    QLabel** train_labels;
 
 signals:
-    void TrainComing(Train*, QLabel*);
-    void TrainLeaving(Train*, QLabel*);
+    void TrainComing(Train*);
+    void TrainLeaving(Train*);
+    void AttachLabel(int index, int id);
+    void DetachLabel(int index);
 
 public slots:
     void onSignalIn(Train*);
