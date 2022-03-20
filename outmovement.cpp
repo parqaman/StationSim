@@ -23,11 +23,8 @@ void OutMovement::run()
                 }
                 cooldown++;
             }
-            if(moving_train != nullptr && cooldown == (occupy_exit_line_duration * 2 + exit_platform_duration * 2)){
-//                emit OutLineFree(moving_train);
-            }
+
             if(moving_train != nullptr && cooldown == exit_platform_duration * 2){
-//                qDebug() << moving_train->getId() << " - left at its platform ";
                 emit PlatformFree(moving_train);
                 moving_train = nullptr;
                 cooldown = 0;
@@ -35,7 +32,6 @@ void OutMovement::run()
         }
         m1.unlock();
     }
-
 }
 
 void OutMovement::setExit_platform_duration(int newExit_platform_duration)
@@ -50,7 +46,7 @@ void OutMovement::onLeavingTrain(Train* train)
     moving_train = train;
 }
 
-void OutMovement::onHalfSecondUpdate(int timer)
+void OutMovement::onHalfSecondUpdate()
 {
     second_counter = 1;
 }

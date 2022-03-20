@@ -9,11 +9,6 @@ Train::Train(int _duration)
 {
 }
 
-Train::~Train()
-{
-    qDebug() << "Destroyed Train " << this->id;
-}
-
 int Train::getStop_duration() const
 {
     return stop_duration;

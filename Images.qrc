@@ -2,4 +2,5 @@
     <qresource prefix="/Platforms">
         <file>5_Platforms_Plan.jpg</file>
     </qresource>
+    <qresource prefix="/Icon"/>
 </RCC>

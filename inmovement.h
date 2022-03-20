@@ -32,7 +32,7 @@ signals:
 
 public slots:
     void onTrainComing(Train*);
-    void onHalfSecondUpdate(int);
+    void onHalfSecondUpdate();
 };
 
 #endif // INMOVEMENT_H

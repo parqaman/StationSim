@@ -42,7 +42,7 @@ void InMovement::onTrainComing(Train* train)
     moving_train = train;
 }
 
-void InMovement::onHalfSecondUpdate(int timer)
+void InMovement::onHalfSecondUpdate()
 {
     second_counter = 1;
 }

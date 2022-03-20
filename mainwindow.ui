@@ -42,140 +42,52 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="example_label">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>2218</x>
-      <y>489</y>
-      <width>81</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>10</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);
-border:  2px solid black;</string>
-    </property>
-    <property name="text">
-     <string>Train 500</string>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-    <property name="indent">
-     <number>0</number>
-    </property>
-   </widget>
-   <widget class="QLabel" name="example_label_2">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>1900</x>
-      <y>427</y>
-      <width>81</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>10</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);
-border:  2px solid black;</string>
-    </property>
-    <property name="text">
-     <string>Train 500</string>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-    <property name="indent">
-     <number>0</number>
-    </property>
-   </widget>
-   <widget class="QLabel" name="example_label_3">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>1684</x>
-      <y>429</y>
-      <width>81</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>10</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(0, 0, 0);
-border:  2px solid black;
-background-color: rgb(255, 127, 127);</string>
-    </property>
-    <property name="text">
-     <string>Train 500</string>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-    <property name="indent">
-     <number>0</number>
-    </property>
-   </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>2060</x>
+      <x>2160</x>
       <y>50</y>
-      <width>221</width>
-      <height>121</height>
+      <width>121</width>
+      <height>72</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="current_time_heading">
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <pointsize>10</pointsize>
         </font>
        </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 0, 0);</string>
+       </property>
        <property name="text">
-        <string>Current time (in second)</string>
+        <string>Current time</string>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+       </property>
       </widget>
      </item>
      <item>
-      <widget class="QLCDNumber" name="clock_display">
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
+      <widget class="QLabel" name="current_time_label">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
        </property>
       </widget>
      </item>
@@ -206,16 +118,20 @@ background-color: rgb(240, 240, 240);</string>
    <widget class="QSpinBox" name="turbo_spinbox">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>94</y>
-      <width>91</width>
-      <height>71</height>
+      <x>60</x>
+      <y>70</y>
+      <width>160</width>
+      <height>70</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <pointsize>20</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string>background-color: rgb(244, 244, 244);
+color: rgb(0, 0, 0);</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -238,18 +154,22 @@ background-color: rgb(240, 240, 240);</string>
     <property name="stepType">
      <enum>QAbstractSpinBox::DefaultStepType</enum>
     </property>
+    <property name="value">
+     <number>1</number>
+    </property>
    </widget>
    <widget class="QPushButton" name="confirm_turbo_spinbox">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>164</y>
-      <width>91</width>
+      <x>60</x>
+      <y>140</y>
+      <width>160</width>
       <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(244, 244, 244);</string>
+     <string notr="true">background-color: rgb(244, 244, 244);
+color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
      <string>Confirm</string>
@@ -322,14 +242,14 @@ background-color: rgb(240, 240, 240);</string>
      <number>120</number>
     </property>
     <property name="value">
-     <number>1</number>
+     <number>65</number>
     </property>
    </widget>
    <widget class="QLabel" name="turbo_label">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>49</y>
+      <x>60</x>
+      <y>25</y>
       <width>160</width>
       <height>45</height>
      </rect>
@@ -343,13 +263,13 @@ background-color: rgb(240, 240, 240);</string>
      <string notr="true">color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
-     <string>Turbo (fast forward)</string>
+     <string>Fast forward</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="exit_line_duration_heading">
+   <widget class="QLabel" name="enter_exit_line_duration_heading">
     <property name="geometry">
      <rect>
       <x>1250</x>
@@ -367,14 +287,13 @@ background-color: rgb(240, 240, 240);</string>
      <string notr="true">color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
-     <string>Exit line
-occupancy duration</string>
+     <string>Enter/exit train cycle</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QSpinBox" name="exit_line_spinbox">
+   <widget class="QSpinBox" name="enter_exit_line_duration_spinbox">
     <property name="geometry">
      <rect>
       <x>1320</x>
@@ -401,23 +320,170 @@ occupancy duration</string>
      <number>120</number>
     </property>
     <property name="value">
-     <number>1</number>
+     <number>20</number>
     </property>
+   </widget>
+   <widget class="QPushButton" name="pause_continue_button">
+    <property name="geometry">
+     <rect>
+      <x>1110</x>
+      <y>618</y>
+      <width>180</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(240, 240, 240);</string>
+    </property>
+    <property name="text">
+     <string>Pause!</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="exit_button">
+    <property name="geometry">
+     <rect>
+      <x>2259</x>
+      <y>719</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(240, 240, 240);</string>
+    </property>
+    <property name="text">
+     <string>Exit</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>2160</x>
+      <y>130</y>
+      <width>121</width>
+      <height>63</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QLabel" name="second_heading">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string>in second</string>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="time_in_second_label">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>2030</x>
+      <y>50</y>
+      <width>121</width>
+      <height>72</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QLabel" name="current_day_heading">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string>Day</string>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="day_counter_label">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
    <zorder>turbo_label</zorder>
    <zorder>railway_plan_label</zorder>
-   <zorder>example_label</zorder>
-   <zorder>example_label_2</zorder>
-   <zorder>example_label_3</zorder>
    <zorder>verticalLayoutWidget</zorder>
    <zorder>turbo_spinbox</zorder>
    <zorder>confirm_turbo_spinbox</zorder>
+   <zorder>pause_continue_button</zorder>
+   <zorder>exit_button</zorder>
+   <zorder>verticalLayoutWidget_2</zorder>
+   <zorder>verticalLayoutWidget_3</zorder>
    <zorder>cover</zorder>
-   <zorder>platform_stop_duration_heading</zorder>
+   <zorder>enter_exit_line_duration_heading</zorder>
    <zorder>start_button</zorder>
-   <zorder>exit_line_spinbox</zorder>
-   <zorder>exit_line_duration_heading</zorder>
    <zorder>platform_duration_spinbox</zorder>
+   <zorder>platform_stop_duration_heading</zorder>
+   <zorder>enter_exit_line_duration_spinbox</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionasda">

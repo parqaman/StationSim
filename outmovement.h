@@ -34,7 +34,7 @@ signals:
 
 public slots:
     void onLeavingTrain(Train*);
-    void onHalfSecondUpdate(int timer);
+    void onHalfSecondUpdate();
 };
 
 #endif // OUTMOVEMENT_H

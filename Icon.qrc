@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/IconImage">
+        <file>train.png</file>
+    </qresource>
+</RCC>

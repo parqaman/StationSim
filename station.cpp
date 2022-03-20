@@ -1,6 +1,6 @@
 #include "station.h"
 
-Station::Station(int exit_line, QObject *parent)
+Station::Station(QObject *parent)
     : QThread{parent}
     , second_counter{1}
     , gate_in_open{true}
@@ -9,7 +9,6 @@ Station::Station(int exit_line, QObject *parent)
     , cooldown_out(5)
     , exit_line_cooldown(-1)
     , holded_train_counter(0)
-    , exit_line_max(exit_line)
 {
     for(int i = 0; i < NUM_OF_PLATFORMS; i++){
         platforms[i] = nullptr;
@@ -27,7 +26,6 @@ void Station::run()
             //work
             tmp_cooldown = exit_line_cooldown;
             if(tmp_cooldown == 1){
-                qDebug() << "Exit line free";
                 gate_out_open = true;
             }
 
@@ -51,7 +49,6 @@ void Station::run()
                 cooldown_out--;
             }
             if(cooldown_out == 0 && moving_out_train != nullptr){
-                qDebug() << moving_out_train->getId() << " left platform " << moving_out_train->getPlatform_index() + 1;
                 exit_line_cooldown = exit_line_max;
                 int pos = moving_out_train->getPlatform_index();
                 platforms[pos] = nullptr;
@@ -63,7 +60,6 @@ void Station::run()
             if(gate_out_open && !out_queue.empty()){
                 gate_out_open = false;
                 moving_out_train = out_queue.at(0);
-                qDebug() << "Train " << moving_out_train->getId() << " is leaving platform " << moving_out_train->getPlatform_index() + 1;
                 emit TrainLeaving(moving_out_train);
                 out_queue.erase(out_queue.begin());
             }
@@ -72,7 +68,6 @@ void Station::run()
             if(gate_in_open && !in_queue.empty()){
                 int pos = findFreePlatform();
                 if(pos != -1){
-                    qDebug() << "Train " << in_queue.at(0)->getId() << " is entering platform " << pos + 1;
                     gate_in_open = false;
                     in_queue.at(0)->setPlatform_index(pos);
                     emit AttachLabel(pos, in_queue.at(0)->getId());
@@ -84,7 +79,6 @@ void Station::run()
                 }
                 else {
                     holded_train_counter++;
-                    qDebug() << "Holded train: " << holded_train_counter;
                 }
             }
 
@@ -115,13 +109,11 @@ void Station::setExit_line_max(int newExit_line_max)
 
 void Station::onSignalIn(Train* train)
 {
-    qDebug() << "Train generated emit received - ID: " << train->getId();
     in_queue.push_back(train);
 }
 
 void Station::onArrivedAtPlatform(Train* tr)
 {
-//    qDebug() << tr->getId() << " arrived at platform " << tr->getPlatform_index() + 1 ;
     int pos = tr->getPlatform_index();
     platforms[pos] = tr;
     gate_in_open = true;
@@ -129,7 +121,6 @@ void Station::onArrivedAtPlatform(Train* tr)
 
 void Station::onFreeExitLine(Train* train)
 {
-//    qDebug() << "Exit line is now free";
     delete train;
 }
 

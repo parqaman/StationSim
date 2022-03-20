@@ -14,9 +14,8 @@ class Station : public QThread
 {
     Q_OBJECT
 public:
-    explicit Station(int exit_line, QObject *parent = nullptr);
+    explicit Station(QObject *parent = nullptr);
     void run();
-
     void setExit_line_max(int newExit_line_max);
 
 private:

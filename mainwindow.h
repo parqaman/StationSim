@@ -27,7 +27,6 @@ private:
     void createLabels(int num_of_labels);
 
 private:
-    int counter;
     Ui::MainWindow *ui;
     TimeClock* time_clock_thread;
     Station* station_thread;
@@ -35,6 +34,11 @@ private:
     InMovement* in_movement_thread;
     OutMovement* out_movement_thread;
     QLabel** train_labels;
+    int sec_total;
+    int sec;
+    int min;
+    int hr;
+    int day;
 
 public slots:
     void onSecondUpdate();
@@ -47,5 +51,7 @@ private slots:
     void on_start_button_clicked();
     void on_confirm_turbo_spinbox_clicked();
     void onChangeColorToRed(int pos);
+    void on_pause_continue_button_clicked();
+    void on_exit_button_clicked();
 };
 #endif // MAINWINDOW_H

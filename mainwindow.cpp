@@ -3,16 +3,18 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , counter(0)
     , ui(new Ui::MainWindow)
+    , sec_total(0)
+    , sec(0)
+    , min(0)
+    , hr(0)
+    , day(0)
 {
     ui->setupUi(this);
+    QCoreApplication::setApplicationName( QString("Train Simulator v1") );
+    setWindowTitle( QCoreApplication::applicationName() );
     this->setFixedSize(this->width(), this->height());
     this->statusBar()->setSizeGripEnabled(false);
-
-    ui->example_label->hide();
-    ui->example_label_2->hide();
-    ui->example_label_3->hide();
 
     ui->turbo_spinbox->setMinimum(1);
     ui->turbo_spinbox->setMaximum(100000);
@@ -21,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     createLabels(NUM_OF_PLATFORMS);
 
     time_clock_thread = new TimeClock(this);
-    station_thread = new Station(20, this);
+    station_thread = new Station(this);
     in_movement_thread = new InMovement(this);
     out_movement_thread = new OutMovement(this);
     train_thread = new TrainGenerator(this);
@@ -43,8 +45,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(in_movement_thread, SIGNAL(MoveLabel(int,int)), this, SLOT(move_label_in(int,int)));
     connect(in_movement_thread, SIGNAL(ArrivedAtPlatform(Train*)), station_thread, SLOT(onArrivedAtPlatform(Train*)));
 
-    connect(time_clock_thread, SIGNAL(HalfSecondUpdate(int)), out_movement_thread, SLOT(onHalfSecondUpdate(int)));
-    connect(time_clock_thread, SIGNAL(HalfSecondUpdate(int)), in_movement_thread, SLOT(onHalfSecondUpdate(int)));
+    connect(time_clock_thread, SIGNAL(HalfSecondUpdate()), out_movement_thread, SLOT(onHalfSecondUpdate()));
+    connect(time_clock_thread, SIGNAL(HalfSecondUpdate()), in_movement_thread, SLOT(onHalfSecondUpdate()));
     connect(time_clock_thread, SIGNAL(OneSecondUpdate()), station_thread, SLOT(onSecondUpdate()));
     connect(time_clock_thread, SIGNAL(OneSecondUpdate()), train_thread, SLOT(onSecondUpdate()));
     connect(time_clock_thread, SIGNAL(OneSecondUpdate()), this, SLOT(onSecondUpdate()));
@@ -52,6 +54,14 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    qDebug() << "Destructor";
+
+    in_movement_thread->terminate();
+    out_movement_thread->terminate();
+    station_thread->terminate();
+    train_thread->terminate();
+    time_clock_thread->terminate();
+
     delete ui;
     delete time_clock_thread;
     delete station_thread;
@@ -77,7 +87,6 @@ void MainWindow::createLabels(int num_of_labels)
         train_labels[i]->setText(QString::fromStdString("Train " + std::to_string(499 + 1)));
         train_labels[i]->hide();
     }
-
 }
 
 void MainWindow::move_label_in(int platform, int cooldown)
@@ -147,11 +156,25 @@ void MainWindow::move_label_out(int platform, int cooldown)
         }
     }
 }
-
 void MainWindow::onSecondUpdate()
 {
-    this->ui->clock_display->display(counter);
-    counter++;
+    sec++;
+    sec_total++;
+    this->ui->time_in_second_label->setText(QString::number(sec_total));
+    if(sec % 60 == 0){
+        min++;
+        sec = 0;
+        if(min % 60 == 0){
+            hr++;
+            min = 0;
+            if(hr % 24 == 0){
+                day++;
+                hr = 0;
+            }
+        }
+    }
+    this->ui->current_time_label->setText(QString::number(hr / 10) + QString::number(hr % 10) + ":" + QString::number(min/10 % 6) + QString::number(min%10) + ":" + QString::number(sec/10) + QString::number(sec%10));
+    this->ui->day_counter_label->setText(QString::number(day));
 }
 
 void MainWindow::attach_label(int index, int id)
@@ -172,11 +195,12 @@ void MainWindow::on_start_button_clicked()
 
     int sleep_time = this->ui->platform_duration_spinbox->value();
     this->train_thread->setTrain_sleep_time(sleep_time);
-    int exit_line_occupancy = this->ui->exit_line_spinbox->value();
-    this->station_thread->setExit_line_max(exit_line_occupancy);
+    int enter_exit_line_occupancy = this->ui->enter_exit_line_duration_spinbox->value();
+    this->station_thread->setExit_line_max(enter_exit_line_occupancy);
+    this->train_thread->setTrain_cycle(enter_exit_line_occupancy);
 
-    ui->exit_line_duration_heading->hide();
-    ui->exit_line_spinbox->hide();
+    ui->enter_exit_line_duration_heading->hide();
+    ui->enter_exit_line_duration_spinbox->hide();
     ui->platform_duration_spinbox->hide();
     ui->platform_stop_duration_heading->hide();
     ui->start_button->hide();
@@ -199,5 +223,22 @@ void MainWindow::on_confirm_turbo_spinbox_clicked()
 void MainWindow::onChangeColorToRed(int pos)
 {
     this->train_labels[pos]->setStyleSheet("font: 10pt; color: rgb(0, 0, 0); background-color: rgb(255, 127, 127); border: 2px solid black");
+}
+
+
+void MainWindow::on_pause_continue_button_clicked()
+{
+    bool paused = this->time_clock_thread->getPause();
+    this->time_clock_thread->setPause(!paused);
+    if(paused)
+        this->ui->pause_continue_button->setText("Pause!");
+    else
+        this->ui->pause_continue_button->setText("Continue!");
+}
+
+
+void MainWindow::on_exit_button_clicked()
+{
+    QApplication::quit();
 }
 

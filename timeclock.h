@@ -14,12 +14,17 @@ public:
 
     void setTurbo(unsigned int newTurbo);
 
+    void setPause(bool newPause);
+
+    bool getPause() const;
+
 private:
     unsigned int turbo;
+    bool pause;
     QMutex m1;
 
 signals:
-    void HalfSecondUpdate(int);
+    void HalfSecondUpdate();
     void OneSecondUpdate();
 };
 

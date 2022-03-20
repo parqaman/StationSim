@@ -14,8 +14,11 @@ public:
 
     void setTrain_sleep_time(int newTrain_sleep_time);
 
+    void setTrain_cycle(int newTrain_cycle);
+
 private:
     int cycle_counter;
+    int train_cycle;
     int train_sleep_time;
     QMutex m1;
 
