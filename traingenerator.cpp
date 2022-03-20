@@ -5,24 +5,30 @@ TrainGenerator::TrainGenerator(QObject* parent)
     :
       QThread(parent)
     , cycle_counter(0)
+    , train_sleep_time(0)
 {
 }
 
 void TrainGenerator::run()
 {
-    int sleep_duration = 70;
     int train_cycle = 20;
     while (true) {
-        QMutex m1;
         m1.lock();
         if(cycle_counter == train_cycle){
-            Train* newtrain = new Train(sleep_duration);
+            Train* newtrain = new Train(train_sleep_time);
             emit TrainGenerated(newtrain);
 //            qDebug() << "Train generated emit sent";
             cycle_counter = 0;
         }
         m1.unlock();
     }
+}
+
+void TrainGenerator::setTrain_sleep_time(int newTrain_sleep_time)
+{
+    m1.lock();
+    train_sleep_time = newTrain_sleep_time;
+    m1.unlock();
 }
 
 void TrainGenerator::onSecondUpdate()

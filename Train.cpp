@@ -1,4 +1,5 @@
 #include "Train.h"
+#include <QDebug>
 
 Train::Train(int _duration)
     :
@@ -6,6 +7,11 @@ Train::Train(int _duration)
       stop_duration(_duration)
     , listed(false)
 {
+}
+
+Train::~Train()
+{
+    qDebug() << "Destroyed Train " << this->id;
 }
 
 int Train::getStop_duration() const

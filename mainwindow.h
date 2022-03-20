@@ -43,5 +43,8 @@ public slots:
     void move_label_in(int platform, int cooldown);
     void move_label_out(int platform, int cooldown);
 
+private slots:
+    void on_start_button_clicked();
+    void on_confirm_turbo_spinbox_clicked();
 };
 #endif // MAINWINDOW_H

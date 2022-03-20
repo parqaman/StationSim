@@ -14,6 +14,8 @@ public:
     explicit OutMovement(QObject *parent = nullptr);
     void run();
 
+    void setExit_platform_duration(int newExit_platform_duration);
+
 private:
     void move_label(int platform, int cooldown);
 
@@ -23,7 +25,7 @@ private:
     int exit_platform_duration;
     int occupy_exit_line_duration;
     Train* moving_train;
-    QMutex m;
+    QMutex m1;
 
 signals:
     void MoveLabel(int, int);

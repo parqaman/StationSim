@@ -12,6 +12,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->example_label_2->hide();
     ui->example_label_3->hide();
 
+    ui->turbo_spinbox->setMinimum(1);
+    ui->turbo_spinbox->setMaximum(1000);
+
     train_labels = new QLabel*[NUM_OF_PLATFORMS];
     createLabels(NUM_OF_PLATFORMS);
 
@@ -41,14 +44,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(out_movement_thread, SIGNAL(MoveLabel(int,int)), this, SLOT(move_label_out(int,int)));
     connect(out_movement_thread, SIGNAL(PlatformFree(Train*)), station_thread, SLOT(onPlatformFree(Train*)));
     connect(out_movement_thread, SIGNAL(OutLineFree(Train*)), station_thread, SLOT(onFreeExitLine(Train*)));
-
-
-    train_thread->start();
-    station_thread->start();
-    in_movement_thread->start();
-    out_movement_thread->start();
-
-    time_clock_thread->start();
 }
 
 MainWindow::~MainWindow()
@@ -166,3 +161,35 @@ void MainWindow::detach_label(int index)
     train_labels[index]->hide();
     train_labels[index]->setGeometry(2209, 489, 81, 30);
 }
+
+void MainWindow::on_start_button_clicked()
+{
+
+    int sleep_time = this->ui->platform_duration_spinbox->value();
+    this->train_thread->setTrain_sleep_time(sleep_time);
+
+    int in_out_time = this->ui->enter_leave_duration_spinbox->value();
+    this->in_movement_thread->setIn_movement_duration(in_out_time);
+    this->out_movement_thread->setExit_platform_duration(in_out_time);
+
+    ui->enter_leave_duration_heading->hide();
+    ui->enter_leave_duration_spinbox->hide();
+    ui->platform_duration_spinbox->hide();
+    ui->platform_stop_duration_heading->hide();
+    ui->start_button->hide();
+    ui->cover->hide();
+    train_thread->start();
+    station_thread->start();
+    in_movement_thread->start();
+    out_movement_thread->start();
+
+    time_clock_thread->start();
+}
+
+
+void MainWindow::on_confirm_turbo_spinbox_clicked()
+{
+    int value = ui->turbo_spinbox->value();
+    time_clock_thread->setTurbo(value);
+}
+

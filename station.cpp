@@ -7,14 +7,13 @@ Station::Station(QObject *parent)
     , exit_line_free{true}
 {
     for(int i = 0; i < NUM_OF_PLATFORMS; i++){
-        free_platforms_index_list.push_back(i);
+//        free_platforms_index_list.push_back(i);
         platforms[i] = nullptr;
     }
 }
 
 void Station::run()
 {
-    int clock = 0;
     while (true) {
         QMutex m;
         m.lock();
@@ -26,11 +25,9 @@ void Station::run()
                     if(platforms[i]->getStop_duration() > 0){
                         platforms[i]->reduce_stop_duration();
                     }
-                    else {
-                        if(platforms[i]->getListed() == false){
-                            out_queue.push_back(platforms[i]);
-                            platforms[i]->setListed(true);
-                        }
+                    if(platforms[i]->getStop_duration() == 0 && platforms[i]->getListed() == false){
+                        out_queue.push_back(platforms[i]);
+                        platforms[i]->setListed(true);
                     }
                 }
             }
@@ -46,10 +43,11 @@ void Station::run()
 
             // checks if any train wants to enter a platform
             if(gate_in_open && !in_queue.empty()){
-                if(!free_platforms_index_list.empty()){
+                int pos = findFreePlatform();
+                if(pos != -1){
                     gate_in_open = false;
-                    int pos = free_platforms_index_list.at(0);
-                    free_platforms_index_list.erase(free_platforms_index_list.begin());
+//                    int pos = free_platforms_index_list.at(0);
+//                    free_platforms_index_list.erase(free_platforms_index_list.begin());
                     in_queue.at(0)->setPlatform_index(pos);
                     emit AttachLabel(pos, in_queue.at(0)->getId());
                     emit TrainComing(in_queue.at(0));
@@ -78,6 +76,7 @@ int Station::findFreePlatform()
 
 void Station::onSignalIn(Train* train)
 {
+//    sleep(1000);
     qDebug() << "Train generated emit received - ID: " << train->getId();
     in_queue.push_back(train);
 }
@@ -99,10 +98,10 @@ void Station::onFreeExitLine(Train* train)
 
 void Station::onPlatformFree(Train* train)
 {
-//    qDebug() << train->getId() << " left platform " << train->getPlatform_index() + 1;
-    emit DetachLabel(train->getPlatform_index());
+    qDebug() << train->getId() << " left platform " << train->getPlatform_index() + 1;
     platforms[train->getPlatform_index()] = nullptr;
-    free_platforms_index_list.push_back(train->getPlatform_index());
+    emit DetachLabel(train->getPlatform_index());
+//    free_platforms_index_list.push_back(train->getPlatform_index());
 }
 
 void Station::onSecondUpdate()

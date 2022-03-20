@@ -13,7 +13,6 @@ OutMovement::OutMovement(QObject *parent)
 void OutMovement::run()
 {
     while (true) {
-        QMutex m1;
         m1.lock();
         if(second_counter == 1){
             second_counter = 0;
@@ -36,6 +35,13 @@ void OutMovement::run()
         m1.unlock();
     }
 
+}
+
+void OutMovement::setExit_platform_duration(int newExit_platform_duration)
+{
+    m1.lock();
+    exit_platform_duration = newExit_platform_duration;
+    m1.unlock();
 }
 
 void OutMovement::onLeavingTrain(Train* train)

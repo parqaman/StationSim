@@ -14,6 +14,8 @@ public:
     explicit InMovement(QObject *parent = nullptr);
     void run();
 
+    void setIn_movement_duration(int newIn_movement_duration);
+
 private:
     void move_label(int platform, int cooldown);
 
@@ -22,7 +24,7 @@ private:
     int cooldown;
     int in_movement_duration;
     Train* moving_train;
-    QMutex m;
+    QMutex m1;
 
 signals:
     void MoveLabel(int platform, int timer);

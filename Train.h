@@ -9,6 +9,7 @@ class Train
 {
 public:
     Train(int _duration);
+    ~Train();
 
     int getStop_duration() const;
 

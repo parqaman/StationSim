@@ -24,7 +24,7 @@ private:
     unsigned int second_counter;
     bool gate_in_open;
     bool exit_line_free;
-    std::vector<int> free_platforms_index_list;
+//    std::vector<int> free_platforms_index_list;
     std::vector<Train*> in_queue;
     std::vector<Train*> out_queue;
     Train* platforms[NUM_OF_PLATFORMS];

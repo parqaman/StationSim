@@ -3,6 +3,7 @@
 
 #include <QThread>
 #include <QObject>
+#include <QMutex>
 
 class TimeClock : public QThread
 {
@@ -10,6 +11,12 @@ class TimeClock : public QThread
 public:
     explicit TimeClock(QObject *parent = nullptr);
     void run();
+
+    void setTurbo(unsigned int newTurbo);
+
+private:
+    unsigned int turbo;
+    QMutex m1;
 
 signals:
     void HalfSecondUpdate(int);

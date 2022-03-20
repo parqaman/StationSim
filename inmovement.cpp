@@ -12,7 +12,6 @@ InMovement::InMovement(QObject *parent)
 void InMovement::run()
 {
     while (true) {
-        QMutex m1;
         m1.lock();
         if(second_counter == 1){
             second_counter = 0;
@@ -29,6 +28,13 @@ void InMovement::run()
         }
         m1.unlock();
     }
+}
+
+void InMovement::setIn_movement_duration(int newIn_movement_duration)
+{
+    m1.lock();
+    in_movement_duration = newIn_movement_duration;
+    m1.unlock();
 }
 
 void InMovement::onTrainComing(Train* train)

@@ -3,14 +3,15 @@
 
 TimeClock::TimeClock(QObject *parent)
     : QThread{parent}
+    , turbo(1)
 {
 }
 
 void TimeClock::run()
 {
     int counter = 0;
-    const int turbo = 100;
     while (true) {
+        m1.lock();
         usleep(500000 / turbo);
         emit HalfSecondUpdate(counter);
         usleep(500000 / turbo);
@@ -18,5 +19,13 @@ void TimeClock::run()
         counter++;
         emit HalfSecondUpdate(counter);
         emit OneSecondUpdate();
+        m1.unlock();
     }
+}
+
+void TimeClock::setTurbo(unsigned int newTurbo)
+{
+    m1.lock();
+    turbo = newTurbo;
+    m1.unlock();
 }

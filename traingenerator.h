@@ -12,9 +12,12 @@ public:
     explicit TrainGenerator(QObject* parent = 0);
     void run();
 
+    void setTrain_sleep_time(int newTrain_sleep_time);
+
 private:
     int cycle_counter;
-    QMutex m;
+    int train_sleep_time;
+    QMutex m1;
 
 
 signals:
