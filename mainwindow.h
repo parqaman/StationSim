@@ -46,5 +46,6 @@ public slots:
 private slots:
     void on_start_button_clicked();
     void on_confirm_turbo_spinbox_clicked();
+    void onChangeColorToRed(int pos);
 };
 #endif // MAINWINDOW_H

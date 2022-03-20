@@ -7,43 +7,47 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setFixedSize(this->width(), this->height());
+    this->statusBar()->setSizeGripEnabled(false);
 
     ui->example_label->hide();
     ui->example_label_2->hide();
     ui->example_label_3->hide();
 
     ui->turbo_spinbox->setMinimum(1);
-    ui->turbo_spinbox->setMaximum(1000);
+    ui->turbo_spinbox->setMaximum(100000);
 
     train_labels = new QLabel*[NUM_OF_PLATFORMS];
     createLabels(NUM_OF_PLATFORMS);
 
     time_clock_thread = new TimeClock(this);
-    station_thread = new Station(this);
+    station_thread = new Station(20, this);
     in_movement_thread = new InMovement(this);
     out_movement_thread = new OutMovement(this);
     train_thread = new TrainGenerator(this);
 
-    connect(time_clock_thread, SIGNAL(HalfSecondUpdate(int)), in_movement_thread, SLOT(onHalfSecondUpdate(int)));
-    connect(time_clock_thread, SIGNAL(HalfSecondUpdate(int)), out_movement_thread, SLOT(onHalfSecondUpdate(int)));
-    connect(time_clock_thread, SIGNAL(OneSecondUpdate()), station_thread, SLOT(onSecondUpdate()));
-    connect(time_clock_thread, SIGNAL(OneSecondUpdate()), train_thread, SLOT(onSecondUpdate()));
-    connect(time_clock_thread, SIGNAL(OneSecondUpdate()), this, SLOT(onSecondUpdate()));
+
 
     connect(train_thread, SIGNAL(TrainGenerated(Train*)), station_thread, SLOT(onSignalIn(Train*)));
 
-    connect(station_thread, SIGNAL(AttachLabel(int,int)), this, SLOT(attach_label(int,int)));
     connect(station_thread, SIGNAL(DetachLabel(int)), this, SLOT(detach_label(int)));
-
-    connect(station_thread, SIGNAL(TrainComing(Train*)), in_movement_thread, SLOT(onTrainComing(Train*)));
     connect(station_thread, SIGNAL(TrainLeaving(Train*)), out_movement_thread, SLOT(onLeavingTrain(Train*)));
+    connect(station_thread, SIGNAL(AttachLabel(int,int)), this, SLOT(attach_label(int,int)));
+    connect(station_thread, SIGNAL(TrainComing(Train*)), in_movement_thread, SLOT(onTrainComing(Train*)));
+    connect(station_thread, SIGNAL(ChangeColorToRed(int)), this, SLOT(onChangeColorToRed(int)));
+
+    connect(out_movement_thread, SIGNAL(OutLineFree(Train*)), station_thread, SLOT(onFreeExitLine(Train*)));
+    connect(out_movement_thread, SIGNAL(MoveLabel(int,int)), this, SLOT(move_label_out(int,int)));
+    connect(out_movement_thread, SIGNAL(PlatformFree(Train*)), station_thread, SLOT(onPlatformFree(Train*)));
 
     connect(in_movement_thread, SIGNAL(MoveLabel(int,int)), this, SLOT(move_label_in(int,int)));
     connect(in_movement_thread, SIGNAL(ArrivedAtPlatform(Train*)), station_thread, SLOT(onArrivedAtPlatform(Train*)));
 
-    connect(out_movement_thread, SIGNAL(MoveLabel(int,int)), this, SLOT(move_label_out(int,int)));
-    connect(out_movement_thread, SIGNAL(PlatformFree(Train*)), station_thread, SLOT(onPlatformFree(Train*)));
-    connect(out_movement_thread, SIGNAL(OutLineFree(Train*)), station_thread, SLOT(onFreeExitLine(Train*)));
+    connect(time_clock_thread, SIGNAL(HalfSecondUpdate(int)), out_movement_thread, SLOT(onHalfSecondUpdate(int)));
+    connect(time_clock_thread, SIGNAL(HalfSecondUpdate(int)), in_movement_thread, SLOT(onHalfSecondUpdate(int)));
+    connect(time_clock_thread, SIGNAL(OneSecondUpdate()), station_thread, SLOT(onSecondUpdate()));
+    connect(time_clock_thread, SIGNAL(OneSecondUpdate()), train_thread, SLOT(onSecondUpdate()));
+    connect(time_clock_thread, SIGNAL(OneSecondUpdate()), this, SLOT(onSecondUpdate()));
 }
 
 MainWindow::~MainWindow()
@@ -160,6 +164,7 @@ void MainWindow::detach_label(int index)
 {
     train_labels[index]->hide();
     train_labels[index]->setGeometry(2209, 489, 81, 30);
+    train_labels[index]->setStyleSheet("font: 10pt; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); border: 2px solid black");
 }
 
 void MainWindow::on_start_button_clicked()
@@ -167,13 +172,11 @@ void MainWindow::on_start_button_clicked()
 
     int sleep_time = this->ui->platform_duration_spinbox->value();
     this->train_thread->setTrain_sleep_time(sleep_time);
+    int exit_line_occupancy = this->ui->exit_line_spinbox->value();
+    this->station_thread->setExit_line_max(exit_line_occupancy);
 
-    int in_out_time = this->ui->enter_leave_duration_spinbox->value();
-    this->in_movement_thread->setIn_movement_duration(in_out_time);
-    this->out_movement_thread->setExit_platform_duration(in_out_time);
-
-    ui->enter_leave_duration_heading->hide();
-    ui->enter_leave_duration_spinbox->hide();
+    ui->exit_line_duration_heading->hide();
+    ui->exit_line_spinbox->hide();
     ui->platform_duration_spinbox->hide();
     ui->platform_stop_duration_heading->hide();
     ui->start_button->hide();
@@ -191,5 +194,10 @@ void MainWindow::on_confirm_turbo_spinbox_clicked()
 {
     int value = ui->turbo_spinbox->value();
     time_clock_thread->setTurbo(value);
+}
+
+void MainWindow::onChangeColorToRed(int pos)
+{
+    this->train_labels[pos]->setStyleSheet("font: 10pt; color: rgb(0, 0, 0); background-color: rgb(255, 127, 127); border: 2px solid black");
 }
 

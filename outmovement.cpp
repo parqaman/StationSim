@@ -2,7 +2,7 @@
 
 OutMovement::OutMovement(QObject *parent)
     : QThread{parent}
-    , second_counter(0)
+    , second_counter(1)
     , cooldown(0)
     , exit_platform_duration(5)
     , occupy_exit_line_duration(20)
@@ -18,18 +18,19 @@ void OutMovement::run()
             second_counter = 0;
             //work
             if(moving_train != nullptr && cooldown < (occupy_exit_line_duration * 2 + exit_platform_duration * 2)){
-                if(cooldown < exit_platform_duration * 2)
+                if(cooldown < exit_platform_duration * 2){
                     emit MoveLabel(moving_train->getPlatform_index(), cooldown);
+                }
                 cooldown++;
             }
             if(moving_train != nullptr && cooldown == (occupy_exit_line_duration * 2 + exit_platform_duration * 2)){
-                emit OutLineFree(moving_train);
-                moving_train = nullptr;
-                cooldown = 0;
+//                emit OutLineFree(moving_train);
             }
             if(moving_train != nullptr && cooldown == exit_platform_duration * 2){
 //                qDebug() << moving_train->getId() << " - left at its platform ";
                 emit PlatformFree(moving_train);
+                moving_train = nullptr;
+                cooldown = 0;
             }
         }
         m1.unlock();

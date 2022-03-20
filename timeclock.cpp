@@ -12,13 +12,14 @@ void TimeClock::run()
     int counter = 0;
     while (true) {
         m1.lock();
-        usleep(500000 / turbo);
+        if(counter == 1440) break;
         emit HalfSecondUpdate(counter);
         usleep(500000 / turbo);
         qDebug() << counter << " - timer clock";
         counter++;
         emit HalfSecondUpdate(counter);
         emit OneSecondUpdate();
+        usleep(500000 / turbo);
         m1.unlock();
     }
 }
