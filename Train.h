@@ -3,12 +3,11 @@
 
 #include <unistd.h>
 
-static int id_counter = 0;
 
 class Train
 {
 public:
-    Train(int _duration);
+    Train(int _id, int _duration);
 
     int getStop_duration() const;
 

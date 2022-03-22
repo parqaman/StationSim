@@ -4,6 +4,7 @@
 TrainGenerator::TrainGenerator(QObject* parent)
     :
       QThread(parent)
+    , id_counter(0)
     , cycle_counter(0)
     , train_cycle(15)
     , train_sleep_time(0)
@@ -15,7 +16,7 @@ void TrainGenerator::run()
     while (true) {
         m1.lock();
         if(cycle_counter == train_cycle){
-            Train* newtrain = new Train(train_sleep_time);
+            Train* newtrain = new Train(++id_counter, train_sleep_time);
             emit TrainGenerated(newtrain);
             cycle_counter = 0;
         }

@@ -82,7 +82,7 @@ void MainWindow::createLabels(int num_of_labels)
 {
     for(int i = 0; i < num_of_labels; i++){
         train_labels[i] = new QLabel(this);
-        train_labels[i]->setGeometry(2209, 489, 81, 30);
+        train_labels[i]->setGeometry(1447, 466, 68, 30);
         train_labels[i]->setStyleSheet("font: 10pt; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); border: 2px solid black");
         train_labels[i]->setText(QString::fromStdString("Train " + std::to_string(499 + 1)));
         train_labels[i]->hide();
@@ -93,32 +93,32 @@ void MainWindow::move_label_in(int platform, int cooldown)
 {
     if(train_labels[platform] != nullptr){
         if(platform == 0){
-            train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y());
+            train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y());
         }
 
         else if(platform == 1){
             if(cooldown != 2)
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y());
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y());
             else
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y() - 60);
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y() - 40);
         }
         else if(platform == 2){
             if(cooldown < 2 || cooldown > 3)
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y());
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y());
             else
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y() - 60);
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y() - 40);
         }
         else if(platform == 3){
             if(cooldown < 2 || cooldown > 4)
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y());
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y());
             else
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y() - 60);
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y() - 40);
         }
         else if(platform == 4){
             if(cooldown < 2 || cooldown > 5)
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y());
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y());
             else
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y() - 60);
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y() - 40);
         }
     }
 }
@@ -127,32 +127,32 @@ void MainWindow::move_label_out(int platform, int cooldown)
 {
     if(train_labels[platform] != nullptr){
         if(platform == 0){
-            train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y());
+            train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y());
         }
 
         else if(platform == 1){
             if(cooldown != 7)
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y());
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y());
             else
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y() + 60);
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y() + 40);
         }
         else if(platform == 2){
             if(cooldown < 6 || cooldown > 7)
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y());
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y());
             else
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y() + 60);
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y() + 40);
         }
         else if(platform == 3){
             if(cooldown < 5 || cooldown > 7)
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y());
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y());
             else
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y() + 60);
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y() + 40);
         }
         else if(platform == 4){
             if(cooldown < 4 || cooldown > 7)
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y());
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y());
             else
-                train_labels[platform]->move(train_labels[platform]->x() - 105, train_labels[platform]->y() + 60);
+                train_labels[platform]->move(train_labels[platform]->x() - 68, train_labels[platform]->y() + 40);
         }
     }
 }
@@ -161,10 +161,10 @@ void MainWindow::onSecondUpdate()
     sec++;
     sec_total++;
     this->ui->time_in_second_label->setText(QString::number(sec_total));
-    if(sec % 60 == 0){
+    if(sec % 40 == 0){
         min++;
         sec = 0;
-        if(min % 60 == 0){
+        if(min % 40 == 0){
             hr++;
             min = 0;
             if(hr % 24 == 0){
@@ -186,7 +186,7 @@ void MainWindow::attach_label(int index, int id)
 void MainWindow::detach_label(int index)
 {
     train_labels[index]->hide();
-    train_labels[index]->setGeometry(2209, 489, 81, 30);
+    train_labels[index]->move(1447, 466);
     train_labels[index]->setStyleSheet("font: 10pt; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); border: 2px solid black");
 }
 

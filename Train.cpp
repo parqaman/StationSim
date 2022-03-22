@@ -1,9 +1,9 @@
 #include "Train.h"
 #include <QDebug>
 
-Train::Train(int _duration)
+Train::Train(int _id, int _duration)
     :
-      id(++id_counter),
+      id(_id),
       stop_duration(_duration)
     , listed(false)
 {

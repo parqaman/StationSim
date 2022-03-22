@@ -17,6 +17,7 @@ public:
     void setTrain_cycle(int newTrain_cycle);
 
 private:
+    int id_counter;
     int cycle_counter;
     int train_cycle;
     int train_sleep_time;

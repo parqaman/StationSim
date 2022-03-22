@@ -60,8 +60,8 @@ void Station::run()
             if(gate_out_open && !out_queue.empty()){
                 gate_out_open = false;
                 moving_out_train = out_queue.at(0);
-                emit TrainLeaving(moving_out_train);
                 out_queue.erase(out_queue.begin());
+                emit TrainLeaving(moving_out_train);
             }
 
             // checks if any train wants to enter a platform
@@ -89,6 +89,29 @@ void Station::run()
         }
         m.unlock();
     }
+}
+
+Station::~Station()
+{
+    if(!in_queue.empty()){
+        int size = in_queue.size();
+        for(int i = 0; i < size; i++){
+            delete in_queue.at(i);
+        }
+    }
+    if(!out_queue.empty()){
+        int size = out_queue.size();
+        for(int i = 0; i < size; i++){
+            delete out_queue.at(i);
+        }
+    }
+    for(int i = 0; i < NUM_OF_PLATFORMS; i++){
+        if(platforms[i] != nullptr){
+            delete platforms[i];
+        }
+    }
+    if(moving_out_train != nullptr)
+        delete moving_out_train;
 }
 
 int Station::findFreePlatform()
